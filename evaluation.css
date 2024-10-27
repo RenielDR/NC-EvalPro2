@@ -1,0 +1,93 @@
+#evaluation-report {
+    padding: 20px;
+}
+
+.search-container {
+    background-color: #f0f0f0; /* Gray background */
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.search-button {
+    padding: 8px 15px;
+    background-color: #007BFF; /* Blue button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+#table-container {
+    background-color: white; /* Light blue background */
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+/*.evaluation-table {
+    width: 80%;
+    border-collapse: collapse;
+}*/
+
+.evaluation-table th, .evaluation-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.evaluation-table th {
+    background-color: #007BFF; /* Blue header */
+    color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.evaluation-table-part1 td {
+    padding: 10px;
+    border: 1px solid black;
+    font-size: 16px;
+    text-align: center;
+}
+.evaluation-table-part2 td {
+    padding: 10px;
+    border: 1px solid black;
+    font-size: 16px;
+    text-align: center;
+}
+.evaluation-table-part3 td {
+    padding: 10px;
+    border: 1px solid black;
+    font-size: 16px;
+    text-align: center;
+}
+.eval-comments td{
+    padding: 5px;
+    border: 1px solid black;
+    font-size: 16px;
+}
+
+td.P-column{
+    width: 60%;
+    text-align: left;
+}
+td.num-column{
+    width: 4%;
+}

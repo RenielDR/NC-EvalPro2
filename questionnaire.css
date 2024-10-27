@@ -1,0 +1,79 @@
+/* Green container */
+.container-green {
+    width: 26%;
+    height: 10%;
+    background-color: #C7FFD8; /* Light green */
+    padding: 15px;
+    border-radius: 8px;
+}
+textarea{
+    width: 94%;
+}
+
+/* Blue container */
+.container-blue {
+    width: 67%;
+    background-color: whitesmoke; 
+    padding: 20px;
+    border-radius: 4px;
+}
+
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    font-size: 10px;
+}
+
+th.Qhead{
+    font-size: 15px;
+}
+
+
+th.wide-column {
+    text-align: center;
+    width: 90%;
+    font-size: 20px;
+}
+
+/* Align specific columns */
+td.wide-column {
+    text-align: left;
+    font-size: 18px;
+}
+
+td {
+    text-align: center;
+}
+
+input[type="radio"] {
+    margin: 0;
+}
+
+
+.container-green button, .container-blue button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #0037ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}

@@ -1,0 +1,32 @@
+.data-tables {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    
+    .student-table, .faculty-table {
+        width: 48%;
+    }
+    
+    .student-table table, .faculty-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .student-table th, .student-table td,
+    .faculty-table th, .faculty-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    
+    .student-table th, .faculty-table th {
+        background-color: #f2f2f2;
+    }
+    
+    .analytics-graph {
+        width: 100%;
+        max-width: 800px;
+        margin: 20px auto;
+        height: 400px;
+    }

@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="chart.css"/>
+    <link rel="stylesheet" href="css.css"/>
+    <link rel="stylesheet" href="questionnaire.css">
+    <link rel="stylesheet" href="evaluation.css">
+    <title>NC - EvalPro</title>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="sidebar.js" defer></script>
+    <script type="text/javascript" src="chart.js" defer></script>
+    <script type="text/javascript" src="subject.js" defer></script>
+    <script type="text/javascript" src="year.js" defer></script>
+    <script type="text/javascript" src="questions.js" defer></script>
+    <script type="text/javascript" src="faculties.js" defer></script>
+    <script type="text/javascript" src="students.js" defer></script>
+    <script type="text/javascript" src="classes.js" defer></script>
+    <script type="text/javascript" src="evaluation.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+
+    <!-- Font Awesome for Icons (optional, can replace with custom icons if needed) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Add Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+
+     <!-- Top navigation bar -->
+    <div class="navbar">
+        <img src="Images/hamburger.png" alt="hbgbtn" class="hamburger-btn" onclick="toggleSidebar()">
+        <img src="Images/NCLOGO.png" alt="NC_LOGO" class="nc-logo">
+        <div class="logo">NC-EvalPro</div>
+        <img src="Images/profile1.png" alt="Admin" class="admin-btn">
+    </div>
+
+
+    <!-- Side navigation bar -->
+    <div class="sidebar" id="sidebar">
+        <a href="#" onclick="showContent('dashboard')"><i class="fa fa-dashboard"></i><span class="menu-text">Dashboard</span></a>
+        <a href="#" onclick="showContent('subjects')"><i class="fa fa-book"></i><span class="menu-text">Subjects</span></a>
+        <!-- <a href="#" onclick="showContent('classes')"><i class="fa fa-university"></i><span class="menu-text">Classes</span></a> -->
+        <a href="#" onclick="showContent('academic-year')"><i class="fa fa-calendar"></i><span class="menu-text">Academic Year</span></a>
+        <a href="#" onclick="showContent('questionnaires')"><i class="fa fa-list"></i><span class="menu-text">Questionnaires</span></a>
+        <a href="#" onclick="showContent('faculties')"><i class="fa fa-users"></i><span class="menu-text">Faculties</span></a>
+        <a href="#" onclick="showContent('students')"><i class="fa fa-graduation-cap"></i><span class="menu-text">Students</span></a>
+        <a href="#" onclick="showContent('evaluation-report')"><i class="fa fa-file"></i><span class="menu-text">Evaluation Report</span></a>
+        <a href="#" onclick="showContent('user')"><i class="fa fa-user"></i><span class="menu-text">User</span></a>
+
+        <!-- Logout button -->
+        <button class="logout-btn" onclick="logout()">
+            <i class="fa fa-sign-out-alt"></i><span class="menu-text">Logout</span>
+        </button>
+    </div>
+
+
+
+
+    <!-- Main content area -->
+    <div class="content" id="main-content">
+        <div id="dashboard" class="content-section active">
+            <h1>Dashboard</h1>
+            <div class="count-boxes">
+                <div class="count-box">
+                    <h3>Total Students</h3>
+                    <p id="totalStudents">0</p>
+                </div>
+                <div class="count-box">
+                    <h3>Total Faculty</h3>
+                    <p id="totalFaculty">0</p>
+                </div>
+                <div class="count-box">
+                    <h3>Total Users</h3>
+                    <p id="totalUsers">0</p>
+                </div>
+                <div class="count-box">
+                    <h3>Total Classes</h3>
+                    <p>3</p>
+                </div>
+            </div>
+            
+            <!-- Analytics Graph -->
+            <div class="analytics-graph">
+                <canvas id="accessChart"></canvas>
+            </div>
+            
+            <!-- Separate tables for students and faculty -->
+            <div class="data-tables">
+                <div class="student-table">
+                    <h3>Students per Course</h3>
+                    <table id="studentTable">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Number of Students</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="faculty-table">
+                    <h3>Faculty per Course</h3>
+                    <table id="facultyTable">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Number of Faculty</th>
+                            </tr>
+                        </thead>
+                        <tbody id="facultyTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+
+
+
+
+    <div id="subjects" class="content-section">
+            <h2>Subjects</h2>
+            <!-- Add New button and Search bar -->
+            <div class="actions">
+                <div class="search-container">
+                    <input type="text" id="search-subjects" placeholder="Search..." onkeyup="searchSubjects()">
+                    <button class="search-btn" onclick="searchSubjects()"><i class="fa fa-search"></i></button>
+                </div>
+                <button class="add-new" onclick="addSubject()">Add New</button>
+            </div>
+
+            <!-- Table for Subject List -->
+            <table id="subjectTable" class="display">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Code</th>
+                        <th>Subject</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="subject-list">
+                    <!-- Table content will be dynamically populated -->
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <!-- <div id="classes" class="content-section">
+            <h2>Class List</h2>
+            
+            <div class="actions">
+                <div class="search-container">
+                    <input type="text" id="search-classes" placeholder="Search..." onkeyup="searchClasses()">
+                    <button class="search-btn" onclick="searchClasses()"><i class="fa fa-search"></i></button>
+                </div>
+                <button class="add-new" onclick="addClass()">Add New</button>
+            </div>
+
+            
+            <table id="classTable" class="display">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Class</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="class-list">
+                    <tr>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div> -->
+
+        <div id="academic-year" class="content-section">
+            <h2>Academic Year</h2>
+            <!-- Add New button and Search bar -->
+            <div class="actions">
+                <div class="search-container">
+                    <input type="text" id="search-academic" placeholder="Search..." onkeyup="searchAcademicYear()">
+                    <button class="search-btn" onclick="searchAcademicYear()"><i class="fa fa-search"></i></button>
+                </div>
+                <button class="add-new" onclick="addNewAcademicYear()">Add New</button>
+            </div>
+
+            <!-- Table for Academic Year List -->
+            <table id="academicTable" class="display">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Year</th>
+                        <th>Semester</th>
+                        <th>System Default</th>
+                        <th>Evaluation Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="academic-list">
+                    <!-- Table content will be dynamically populated -->
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+        <div id="questionnaires" class="content-section">
+            <h2>Manage Questionnaire</h2>
+        
+            <!-- Main container to hold both green and blue sections -->
+            <div style="display: flex; justify-content: space-between; gap: 20px;">
+        
+                <!-- Green container for Criteria Selection and Question Input -->
+                <div class="container-green">
+                    <h3>Select Criteria and Add Question</h3>
+                    <div class="form-group">
+                        <label for="criteria">Select Criteria:</label>
+                        <select id="criteria">
+                            <option value="" disabled selected>Please select here</option>
+                            <option value="criteria1">A. Learning Delivery</option>
+                            <option value="criteria2">B. Assessment of Student Learning</option>
+                            <option value="criteria3">C. Student-Teacher Engagement</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="question">Question:</label>
+                        <textarea id="question" placeholder="Type your question here..."></textarea>
+                    </div>
+                    <button type="button" class="add-new" id="addQuestionBtn">Add Question</button>
+                </div>
+        
+                <!-- Blue container for Added Questions -->
+                <div class="container-blue">
+                   
+                    <table id="questionTable">
+                        <thead>
+                            <tr>
+                                <th class="wide-column">Question</th>
+                                <th class="Qhead">5 - Outstanding</th>
+                                <th class="Qhead">4 - Highly Satisfactory</th>
+                                <th class="Qhead">3 - Satisfactory</th>
+                                <th class="Qhead">2 - Needs Improvement</th>
+                                <th class="Qhead">1 - Poor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamically added rows will go here -->
+                        </tbody>
+                    </table>
+                    <button class="submit-btn">Submit</button>
+                </div>
+        
+            </div>
+        </div>
+
+
+
+
+        <!-- Faculty Section -->
+        <div id="faculties" class="content-section">
+            <h2>Faculties</h2>
+            <!-- Add New button and Search bar -->
+            <div class="actions">
+                <div class="search-container">
+                    <input type="text" id="search-faculties" placeholder="Search..." onkeyup="searchFaculties()">
+                    <button class="search-btn" onclick="searchFaculties()"><i class="fa fa-search"></i></button>
+                </div>
+                <!-- <button class="add-new" onclick="addNewFaculty()">Add New</button> -->
+            </div>
+            
+            <!-- Faculty Table -->
+            <table id="facultyTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Faculty ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="faculty-list">
+                    
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Student Section -->
+        <div id="students" class="content-section">
+            <h2>Students</h2>
+            <!-- Add New button and Search bar -->
+            <div class="actions">
+                <div class="search-container">
+                    <input type="text" id="search-students" placeholder="Search..." onkeyup="searchStudents()">
+                    <button class="search-btn" onclick="searchStudents()"><i class="fa fa-search"></i></button>
+                </div>
+                <!-- <button class="add-new" onclick="addStudent()">Add New</button> -->
+            </div>
+
+            <!-- Student Table -->
+            <table id="studentTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Course</th> <!-- New column for Course -->
+                        <th>Section</th>
+                        <th>Email</th>  
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="students-list">
+                    <!-- Table content will be dynamically populated -->
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div id="evaluation-report" class="content-section">
+            <h2>Evaluation Report</h2>
+            <p>This is the evaluation report section.</p>
+        
+            <!-- Gray container for search bar -->
+            <div class="search-container">
+                <input type="text" placeholder="Search..." class="search-bar">
+                <button class="search-button">Search</button>
+            </div>
+        
+            <!-- Blue container for the Excel-like table -->
+            <div id="table-container">
+                
+                <table id="evaluationTable" class="evaluation-table-part1">
+                    <h3>Name of Faculty:</h3>
+                    <h3>Subject/Code:</h3>
+
+                        <tr>
+                            <td colspan="9">PART I - INSTRUCTIONAL COMPETENCE</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            
+                            <td colspan="2"><b>PERFORMANCE INDICATORS</b></td>
+                            <td colspan="7"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="num-column">1</td>
+                            <td class="P-column">Integrates vision, mission, goals, objectives and core values of the school in the learning activities.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td class="P-column">Uses course content that is up-to-date and relevant to current issues/concern.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td class="P-column">Uses the prescribe syllabus.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>4</td>
+                            <td class="P-column">States objectives and expected output of the course clearly.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>5</td>
+                            <td class="P-column">Promotes students’ learning by addressing individual learning differences.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>6</td>
+                            <td class="P-column">Asks questions in learning tasks that make students analyze and think critically.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>7</td>
+                            <td class="P-column">Instructions and directions given in modules were effective and helpful.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>8</td>
+                            <td class="P-column">Uses the appropriate language in group chat, text messages, and phone calls. </td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>9</td>
+                            <td class="P-column">Demonstrate high degree of competence in language and grammar.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>10</td>
+                            <td class="P-column">Answers questions with clarity.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>11</td>
+                            <td class="P-column">The learning materials and supporting resources were helpful and useful.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+                </table>
+
+                    <div style="height: 10px;"></div>
+
+                <table id="evaluationTable1" class="evaluation-table-part2">
+                         <tr>
+                            <td colspan="9">PART II - ASSESMENT OF STUDENT LEARNING</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2"><b>PERFORMANCE INDICATORS</b></td>
+                            <td colspan="7"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="num-column">12</td>
+                            <td class="P-column">Gives appropriate learning tasks to measure student’s achievement.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>13</td>
+                            <td class="P-column" class="P-column" class="P-column">Monitors students’ progress through a variety of appropriate evaluation techniques.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>14</td>
+                            <td class="P-column" class="P-column">Makes method of evaluation clear and purposeful to students.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>15</td>
+                            <td class="P-column" class="P-column">Maintains appropriate student records.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>16</td>
+                            <td class="P-column" class="P-column">Provides constructive and frequent feedback to students based on his/her
+                            performance and informs parent/ guardian if necessary.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>17</td>
+                            <td class="P-column" class="P-column">Exercise leniency in giving deadline with submission of learning output. </td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+                </table>
+
+                        <div style="height: 10px;"></div>
+
+
+
+                <table id="evaluationTable2" class="evaluation-table-part3">
+                         <tr>
+                            <td colspan="9">PART III - STUDENT-TEACHER ENGAGEMENT</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" ><b>PERFORMANCE INDICATORS</b></td>
+                            <td colspan="7"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="num-column">18</td>
+                            <td class="P-column">Establishes clear expectations for study guide and house rule.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>19</td>
+                            <td class="P-column">Monitors student regularly for feedback and queries.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>20</td>
+                            <td class="P-column">Instills class discipline in accordance with school policies and regulations.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>21</td>
+                            <td class="P-column">Pays attention to students’ queries and concerns.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>22</td>
+                            <td class="P-column">Demonstrates fairness and consistency. </td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+
+                        <tr>
+                            <td>23</td>
+                            <td class="P-column">Provides additional coaching and mentoring beyond class schedules.</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>MEAN</td>
+                            <td>REMARKS</td>
+                        </tr>
+                </table>
+
+                <table id="evaluationTable3" class="eval-comments">
+                    <tr>
+                        <td colspan="9" class="P-column"><b>COMMENTS:</b></td>
+                    </tr>
+
+                    <tr>
+                        <td class="num-column">1</td>
+                        <td colspan="8"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="num-column">2</td>
+                        <td colspan="8"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="num-column">3</td>
+                        <td colspan="8"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="num-column">4</td>
+                        <td colspan="8"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="num-column">5</td>
+                        <td colspan="8"></td>
+                    </tr>
+                    
+                </table>
+            </div>
+            <button onclick="printTable()">Print Table</button>
+            <button onclick="exportToExcel()">Export to Excel</button>
+        
+
+        <div id="user" class="content-section">
+            <h2>User Management</h2>
+            <p>This is the user management section.</p>
+        </div>
+    </div>
+
+
+
+
+
+    
+</body>
+</html>

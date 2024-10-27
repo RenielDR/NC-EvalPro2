@@ -1,0 +1,538 @@
+
+        /* General styling */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Times New Roman, sans-serif;
+            height: 100%;
+            background-color: #E1E2E3;
+        }
+
+        /* Top navigation bar */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2D3A6E;
+            color: white;
+            padding:7px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            transition: 0.3s;
+        }
+
+        .navbar .nc-logo {
+            height: 45px; /* Same height as the admin button */
+            width: auto;  /* Maintain aspect ratio */
+            padding: 0;   /* Remove default padding if necessary */
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+        }
+
+        .navbar .admin-btn {
+            border: none;
+            height: 40px; /* Set the height same as the logo */
+            width: auto;
+            cursor: pointer; /* Change cursor on hover */
+            position: absolute;
+            right: 50px;
+        }
+
+        .navbar .hamburger-btn {
+            
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            cursor: pointer;
+            position: absolute;
+            left: 0;
+            font-size: 24px;
+            height: 40px; /* Same height as the admin button */
+            width: auto;
+        }
+
+
+
+
+
+
+
+
+        /* Side navigation bar */
+        .sidebar {
+            height: 100vh; /* Full viewport height */
+            width: 250px;
+            position: fixed;
+            top: 48px;
+            left: 0;
+            background-color: #051319;
+            padding-top: 20px;
+            transition: 0.3s;
+            overflow-x: hidden;
+        }
+
+        .sidebar.collapsed {
+            width: 50px;
+            padding: 15px 5px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* Hide the text when sidebar is collapsed */
+        .sidebar.collapsed a .menu-text {
+            display: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        /* Logout button styling */
+        .sidebar .logout-btn {
+            position: absolute;
+            bottom: 80px;
+            width: 100%;
+            padding: 15px 20px;
+            text-align: left;
+            color: white;
+            background-color: #333;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .logout-btn i {
+            margin-right: 10px;
+        }
+
+        .sidebar.collapsed .logout-btn .menu-text {
+            display: none;
+        }
+
+        /* Main content */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            margin-top: 50px;
+            transition: margin-left 0.3s;
+        }
+
+        .sidebar.collapsed + .content {
+            margin-left: 80px;
+        }
+
+        /* For smaller screens */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .content {
+                margin-left: 80px;
+            }
+
+            .sidebar.collapsed {
+                width: 50px;
+            }
+
+            .collapsed + .content {
+                margin-left: 50px;
+            }
+
+            .navbar .hamburger-btn {
+                display: inline-block;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .sidebar {
+                width: 250px;
+                left: -250px;
+                transition: left 0.3s ease; /* Slide the sidebar out of view initially */
+            }
+
+            .sidebar.open {
+                left: 0; /* Bring it back when open */
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .navbar .admin-btn {
+                position: absolute;
+                right: 10px;
+            }
+
+            /* Additional styling for collapsed sidebar in mobile view */
+            .sidebar.collapsed {
+                width: 50px;
+                left: -50px;
+            }
+
+            .collapsed + .content {
+                margin-left: 50px;
+            }
+        }
+
+        /* Adjust for smaller screens */
+        @media screen and (max-width: 600px) {
+            .navbar .admin-btn {
+                position: absolute;
+                right: 30px;
+                padding: 10px 10px;
+                width: auto; /* Adjust width to ensure full visibility */
+                font-size: 16px; /* Optional: adjust font size if needed */
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+        h2 {
+            text-align: left;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for the table */
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        table thead th {
+            background-color: #f2f2f2;
+            font-size: 20px;
+            border-bottom: 7px solid #ddd;
+            text-align: left;
+        }
+
+        table tbody td {
+            border-bottom: 1px solid black;
+            border-spacing: 1px solid black;
+        }
+
+        /* Buttons in Action Column */
+        /*.action-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .action-buttons .edit-btn,
+        .action-buttons .delete-btn {
+            border: none;
+            padding: 4px 8px;
+            margin-right: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: white;
+            font-size: 10px;
+        }
+
+        .edit-btn {
+            background-color: #007bff;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }*/
+
+        /* Add New button styling */
+        .add-new {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            float: right;
+            margin-bottom: 15px;
+        }
+
+
+
+
+
+
+
+
+
+
+        /* Styling for bigger, inline buttons */
+        .dashboard-buttons {
+            display: flex;
+            gap: 20px; /* Add spacing between buttons */
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            justify-content: center; /* Center the buttons */
+            margin-top: 40px;
+        }
+
+        .dashboard-buttons .add-new {
+            background-color: #FFF44E;
+            color: black;
+            border: none;
+            padding: 20px;
+            text-align: center;
+            font-size: 25px;
+            font-family: Times New Roman, sans-serif;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column; /* Stack icon and text vertically */
+            align-items: center;
+            justify-content: center;
+            width: 200px; /* Set a fixed width for equal sizes */
+            height: 100px; /* Set a fixed height for equal sizes */
+        }
+
+        .dashboard-buttons .add-new i {
+            font-size: 70px;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .dashboard-buttons .add-new {
+                width: 200px;
+                height: 200px; /* Adjust height for smaller screens */
+                font-size: 16px; /* Smaller text size */
+            }
+
+            .dashboard-buttons .add-new i {
+                font-size: 50px; /* Smaller icon size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-buttons .add-new {
+                width: 150px;
+                height: 150px;
+                font-size: 14px;
+            }
+
+            .dashboard-buttons .add-new i {
+                font-size: 40px;
+            }
+        }
+
+
+
+
+
+
+
+
+       .count-boxes {
+            display: flex;
+            gap: 20px; /* Spacing between count boxes */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: center; /* Center the boxes */
+        }
+
+        .count-box {
+            background-color: #007bff; /* Blue background similar to dashboard buttons */
+            color: white;
+            border: none;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px; /* Font size for smaller screens */
+            font-family: Times New Roman, sans-serif;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column; /* Stack number and label vertically */
+            align-items: center;
+            justify-content: center;
+            width: 150px; /* Set a fixed width */
+            height: 70px; /* Set a fixed height */
+            cursor: default; /* Disable pointer (not clickable) */
+        }
+
+        .count-box h3 {
+            margin: 0;
+            font-size: 14px; /* Text size for the label */
+            font-weight: bold;
+            color: black;
+
+            text-transform: uppercase; /* Uppercase text style */
+        }
+
+        .count-box p {
+            font-size: 28px; /* Size of the total number displayed */
+            margin: 10px 0 0 0; /* Margin to separate the label and number */
+            font-weight: bold;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .count-box {
+                width: 200px; /* Adjust width for tablet screens */
+                height: 200px; /* Adjust height for tablet screens */
+                font-size: 16px; /* Adjust font size */
+            }
+
+            .count-box p {
+                font-size: 30px; /* Adjust number size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .count-box {
+                width: 100px; /* Smaller width for mobile screens */
+                height: 60px; /* Smaller height for mobile screens */
+                font-size: 12px; /* Adjust font size */
+            }
+
+            .count-box p {
+                font-size: 16px; /* Keep proportionate size */
+            }
+        }
+
+
+
+
+
+
+         /* General styles for table */
+        .display {
+            width: 100%; /* Full width */
+            border-collapse: collapse; /* Remove gaps between cells */
+            overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+            table-layout: fixed; /* Prevent cell expansion */
+        }
+
+        .display th, .display td {
+            padding: 8px; /* Cell padding */
+            text-align: left; /* Align text to the left */
+            white-space: normal; /* Allow text to wrap */
+            overflow: hidden; /* Hide overflow content */
+            text-overflow: ellipsis; /* Add ellipsis for overflow text */
+            max-height: 50px; /* Set a maximum height to avoid excessive growth */
+            word-wrap: break-word; /* Break long words */
+        }
+
+        /* Responsive design for small screens */
+        @media (max-width: 760px) {
+            .display {
+                font-size: 12px; /* Smaller font size */
+                width: 100%; /* Reduce table width */
+            }
+
+            .display th {
+                font-size: 10px; /* Slightly smaller header font size */
+            }
+
+            .display td {
+                white-space: normal; /* Allow text to wrap */
+                word-wrap: break-word; /* Force text to wrap within cells */
+                overflow: hidden; /* Hide overflowing text */
+                max-height: 50px; /* Restrict cell height to avoid vertical growth */
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+        /* Style for action buttons */
+        .action-buttons button {
+            margin-right: 2px; /* Space between buttons */
+        }
+
+        /* Search Container Styles */
+        .search-container {
+            display: flex; /* Flexbox for the search bar */
+            align-items: center; /* Center items vertically */
+        }
+
+        .search-container input[type="text"] {
+            flex: 1; /* Allow the input to grow */
+            min-width: 200px; /* Minimum width for input */
+            margin-right: 5px; /* Space between input and button */
+        }
+
+        /* Add New button styles */
+        .add-new {
+            padding: 10px 15px; /* Add padding for buttons */
+            background-color: #007bff; /* Button color */
+            color: white; /* Button text color */
+            border: none; /* Remove border */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor */
+        }
+
+
+
+
+
+        .content-section {
+            display: none; /* All sections are hidden by default */
+        }
+        .content-section.active {
+            display: block; /* Only the active section is visible */
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .search-btn {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .search-btn i {
+            font-size: 16px;
+            color: #333;
+        }
+
+

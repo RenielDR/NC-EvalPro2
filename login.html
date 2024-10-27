@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            position: relative; /* Required for the pseudo-element */
+            overflow: hidden; /* Prevents scrollbars */
+        }
+
+        /* Pseudo-element for the background image */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url(Images/NC.png);
+            background-size: 115%; /* Cover the entire background */
+            opacity: 0.4; /* Set opacity to 40% */
+            z-index: -1; /* Send the pseudo-element behind the content */
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 220px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: linear-gradient(109.6deg, rgb(120, 143, 251) 11.2%, rgb(133, 235, 255) 91.1%);
+            display: flex; /* Enable flexbox */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally */
+        }
+
+        .login-container img {
+            width: 100px; /* Set a width for the image */
+            height: auto; /* Maintain aspect ratio */
+            margin-bottom: 1px; /* Add space below the image */
+        }
+
+        input[type="text"], input[type="password"], select {
+            width: 95%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #066bee;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #06a7f1;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .register-link a {
+            text-decoration: none;
+            color: #3b05ff;
+            font-weight: bold;
+        }
+
+        .register-link a:hover {
+            color: #0075fa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <img src="Images/NCLOGO.png" alt="Logo">
+        <h2>Login</h2>
+        <form action="login.php" method="post">
+            <label for="student_id">Student ID</label>
+            <input type="text" id="student_id" name="student_id" placeholder="Enter your student ID" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <label for="user_type">Login As</label>
+            <select id="user_type" name="user_type" required>
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+                <option value="faculty">Faculty</option>
+            </select>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="register-link">
+            <p>Don't have an account? Register here</p>
+            <p><a href="registration.html">Student</a> /
+            <a href="facultyreg.html">Faculty</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

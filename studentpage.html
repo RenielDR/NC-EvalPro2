@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <img src="Images/NCLOGO.png" alt="NC_LOGO" class="nc-logo">
+        <div class="logo">NC-EvalPro</div>
+        <img src="Images/profile1.png" alt="Admin" class="admin-btn">
+    </div>
+
+    <div class="container">
+        <button class="prof-container">
+            <p><strong>Prof name:</strong> John Doe</p>
+            <p><strong>Subject Handle:</strong> Computer Science</p>
+        </button>
+
+        <div class="question-container">
+            <h3>Criteria:</h3>
+            <table id="questions-table">
+                <tr>
+                    <th class="wide-column">Question</th>
+                    <th>5 - Outstanding</th>
+                    <th>4 - Highly Satisfactory</th>
+                    <th>3 - Satisfactory</th>
+                    <th>2 - Needs Improvement</th>
+                    <th>1 - Poor</th>
+                </tr>
+                <!-- Questions will be dynamically inserted here -->
+            </table>
+
+            <!-- Submit Button -->
+            <button class="submit-btn">Submit</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="studentpage.js"></script>
+</body>
+
+<style>
+    body {
+        font-family: Times New Roman, sans-serif;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px;
+        margin-top: 80px;
+    }
+
+    /* Styling the prof-container as a button */
+    .prof-container {
+        font-family: Times New Roman, sans-serif;
+        font-size: 24px;
+        background-color: lightblue;
+        padding: 20px;
+        width: 25%;
+        height: 25%;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .prof-container p {
+        margin: 5px 0;
+    }
+
+    .prof-container:hover {
+        background-color: #add8e6;
+    }
+
+    .question-container {
+        background-color: #f0f0f0;
+        padding: 20px;
+        width: 70%;
+        border-radius: 5px;
+        position: relative;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 60px; /* Add bottom margin to avoid overlap with the button */
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ccc;
+    }
+
+    th {
+        background-color: #e0e0e0;
+    }
+
+    /* Set the width of the first column (Question) */
+    .wide-column {
+        width: 60%;
+    }
+
+    /* Submit Button Styling */
+    .submit-btn {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background-color: #45a049;
+    }
+</style>
+</html>
